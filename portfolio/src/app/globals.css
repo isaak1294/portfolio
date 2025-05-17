@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #262626;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  --color-primary: #262626;
+  --color-secondary: #0B6E4F;
+  --color-accent1: #EFBDEB;
+  --color-accent2: #735CDD;
+  --color-accent3: #FFFFFF;
+
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.1; }
+  20% { opacity: 0.3; }
+  40% { opacity: 0.5; }
+  60% { opacity: 0.7; }
+  80%, 100% { opacity: 1; }
+}
+
+@keyframes sheen {
+  0% {
+    background-position: -200% 50%;
+  }
+  100% {
+    background-position: 50% 50%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(200px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@layer utilities {
+  .shadow-glow {
+    box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.4);
+  }
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.animate-flicker {
+  animation: flicker 2s ease-in-out forwards;
+}
+
+#sheen-text {
+  display: inline-block;
+  background: radial-gradient(circle at center, #ffffff 0%, #888888 40%, #000000 70%);
+  background-size: 200% 200%;
+  background-position: 50% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: flicker 2s ease-in-out forwards, sheen 2.5s ease-in-out forwards;
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 1px;
+  background-color: white;
+  margin-left: 2px;
+  animation: blink 1s ster-start infinite;
+}
+
+.animate-rise {
+  animation: rise 1.2s ease-out forwards;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(255, 255, 255, 0.3), transparent 60%);
+}
+
