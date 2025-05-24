@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 
 const navLinks = [
-  { label: 'Home', href: '/' },
   { label: 'Blog', href: '/blog' },
   { label: 'Experience', href: '/experience' },
   { label: 'Projects', href: '/projects' },
@@ -17,9 +16,9 @@ export default function Navbar() {
 
   return (
     <nav className="w-full bg-black border-b border-gray-800 px-6 py-6 flex items-center justify-between text-white font-semibold text-sm sm:text-base z-50">
-      <div className="text-lg sm:text-xl font-bold tracking-wide">
+      <Link href="/" className="text-lg sm:text-xl font-bold tracking-wide hover:text-gray-300 transition-colors duration-200">
         ISAAK WIEBE
-      </div>
+      </Link>
 
       <div className="flex gap-0 divide-x divide-gray-700 border border-gray-700">
         {navLinks.map(({ label, href }) => {
