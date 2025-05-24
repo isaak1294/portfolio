@@ -1,10 +1,8 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 import Link from 'next/link';
-
-
 
 interface QuoteEntry {
   date: string;
@@ -16,59 +14,89 @@ export default function Home() {
   const [quote, setQuote] = useState('');
   const [fullQuote, setFullQuote] = useState('');
   const [buttonsVisible, setButtonsVisible] = useState(false);
+  const skipRef = useRef(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const pages = [
-  { label: 'Blog', path: '/blog' },
-  { label: 'Experience', path: '/experience' },
-  { label: 'Projects', path: '/projects' },
-  { label: 'About', path: '/about' },
+    { label: 'Blog', path: '/blog' },
+    { label: 'Experience', path: '/experience' },
+    { label: 'Projects', path: '/projects' },
+    { label: 'About', path: '/about' },
   ];
 
-  useEffect(() => {
-    const flickerTimer = setTimeout(() => {
-      setVisible(true);
-    }, 2000);
+  const fetchAndSetQuote = async () => {
+    const res = await fetch('/quotes.json');
+    const data: QuoteEntry[] = await res.json();
+    const today = new Date().toISOString().split('T')[0];
+    const entry = data.find((q) => q.date === today);
+    const selected = entry?.quote || `""Lock in." - Me`;
+    setFullQuote(selected);
+    setQuote(selected);
+    setButtonsVisible(true);
+  };
 
-    return () => clearTimeout(flickerTimer);
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => setVisible(true), 2000);
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   useEffect(() => {
-    if (!visible) return;
+    if (!visible || skipRef.current) return;
 
     fetch('/quotes.json')
       .then((res) => res.json())
       .then((data: QuoteEntry[]) => {
         const today = new Date().toISOString().split('T')[0];
         const entry = data.find((q) => q.date === today);
-
-        setFullQuote(entry?.quote || `""Lock in." - Me`)
+        const selected = entry?.quote || `""Lock in." - Me`;
+        setFullQuote(selected);
       });
   }, [visible]);
 
   useEffect(() => {
-    if (!fullQuote) return;
+    if (!fullQuote || skipRef.current) return;
 
-    let index = 0;
+    let index = -1;
 
     const typeNext = () => {
+      if (skipRef.current) {
+        setQuote(fullQuote);
+        setButtonsVisible(true);
+        return;
+      }
+
       if (index < fullQuote.length - 1) {
         setQuote((prev) => prev + fullQuote[index]);
         index++;
-        setTimeout(typeNext, 80); // Delay between characters
+        timeoutRef.current = setTimeout(typeNext, 80);
       } else {
-        setTimeout(() => setButtonsVisible(true), 500)
+        timeoutRef.current = setTimeout(() => setButtonsVisible(true), 500);
       }
     };
 
     typeNext();
 
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, [fullQuote]);
 
+  const handleSkip = () => {
+    if (skipRef.current) return;
+
+    skipRef.current = true;
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    setVisible(true);
+    fetchAndSetQuote();
+  };
 
   return (
-    <div className="w-screen h-screen bg-black relative">
+    <div className="w-screen min-h-screen bg-black text-white flex flex-col items-center px-4 text-center overflow-hidden" onClick={handleSkip}>
       <h1
         className={clsx(
-          "text-5xl font-bold opacity-0 animate-flicker absolute left-1/2 top-[25vh] -translate-x-1/2",
+          "text-5xl sm:text-6xl font-bold animate-flicker mt-[25vh]",
           visible && "opacity-100 transition-opacity duration-1000"
         )}
         id="sheen-text"
@@ -77,14 +105,14 @@ export default function Home() {
       </h1>
 
       {visible && (
-        <p className="text-lg absolute top-[45vh] left-1/2 -translate-x-1/2 w-[90vw] max-w-2xl text-center font-mono px-4">
+        <p className="text-base sm:text-lg max-w-2xl font-mono mt-8 sm:mt-12 mb-10 sm:mb-16 px-2">
           {quote}
           <span className="blinking-cursor"></span>
         </p>
       )}
 
       {buttonsVisible && (
-        <div className="absolute top-[60vh] left-1/2 -translate-x-1/2 flex flex-wrap justify-center gap-4 px-4 animate-rise max-w-full">
+        <div className="flex flex-wrap justify-center gap-4 animate-rise max-w-full mb-12">
           {pages.map(({ label, path }) => (
             <Link href={path} key={label}>
               <button
@@ -102,9 +130,10 @@ export default function Home() {
               </button>
             </Link>
           ))}
-
         </div>
       )}
     </div>
+
+
   );
 }
