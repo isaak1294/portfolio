@@ -1,6 +1,41 @@
-import Navbar from "@/components/Navbar";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import Link from 'next/link';
+import Navbar from '@/components/Navbar';
+
+interface Post {
+  slug: string;
+  title: string;
+  preview: string;
+  date?: string;
+}
 
 export default function BlogPage() {
+  const postsDirectory = path.join(process.cwd(), 'src/content/posts');
+  const filenames = fs.existsSync(postsDirectory) ? fs.readdirSync(postsDirectory) : [];
+
+  const posts: Post[] = filenames
+    .filter((filename) => filename.endsWith('.mdx'))
+    .map((filename) => {
+      const filePath = path.join(postsDirectory, filename);
+      const fileContents = fs.readFileSync(filePath, 'utf8');
+      const { data, content } = matter(fileContents);
+      const slug = filename.replace(/\.mdx$/, '');
+      const preview = content.split('\n').find((line) => line.trim()) ?? '';
+
+      return {
+        slug,
+        title: data.title || slug,
+        preview,
+        date: data.date || '',
+      };
+    });
+
+    console.log('Found MDX posts:', filenames);
+    console.log('Resolved posts directory:', postsDirectory);
+
+
   return (
     <>
       <Navbar />
@@ -13,10 +48,34 @@ export default function BlogPage() {
           </p>
         </header>
 
-        <section>
-          <p className="text-gray-300 text-lg">
-            No entries yet.
-          </p>
+        <section className="space-y-12">
+          {posts.length === 0 ? (
+            <p className="text-gray-300 text-lg">No entries yet.</p>
+          ) : (
+            posts.map(({ title, preview, slug, date }) => (
+              <article key={slug} className="space-y-2">
+                <h2 className="text-2xl font-semibold hover:text-gray-300 transition-colors duration-200">
+                  <Link href={`/blog/${slug}`}>{title}</Link>
+                </h2>
+                {date && (
+                  <p className="text-gray-500 text-sm">
+                    {new Date(date).toLocaleDateString(undefined, {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </p>
+                )}
+                <p className="text-gray-400 leading-relaxed">{preview}</p>
+                <Link
+                  href={`/blog/${slug}`}
+                  className="text-sm text-gray-500 hover:text-gray-300 underline transition-colors duration-200"
+                >
+                  Read more →
+                </Link>
+              </article>
+            ))
+          )}
         </section>
       </main>
     </>
