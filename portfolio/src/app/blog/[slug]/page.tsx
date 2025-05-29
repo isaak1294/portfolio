@@ -5,9 +5,7 @@ import { compileMDX } from 'next-mdx-remote/rsc';
 import { useMDXComponents } from '@/mdx-components';
 import Navbar from '@/components/Navbar';
 
-interface PageProps {
-  params: { slug: string };
-}
+
 
 interface Frontmatter {
   title: string;
@@ -15,7 +13,7 @@ interface Frontmatter {
 }
 
 
-export default async function BlogPostPage({ params }: PageProps) {
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const filePath = path.join(process.cwd(), 'src/content/posts', `${params.slug}.mdx`);
 
   if (!fs.existsSync(filePath)) {
