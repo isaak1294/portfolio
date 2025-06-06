@@ -28,7 +28,7 @@ export default function Home() {
     const data: QuoteEntry[] = await res.json();
     const today = new Date().toISOString().split('T')[0];
     const entry = data.find((q) => q.date === today);
-    const selected = entry?.quote || `""Lock in." - Me`;
+    const selected = entry?.quote || `"Lock in." - Me`;
     setFullQuote(selected);
     setQuote(selected);
     setButtonsVisible(true);
