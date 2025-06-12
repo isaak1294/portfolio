@@ -26,7 +26,7 @@ export default async function Page({ params }: any) {
       <Navbar />
       <main className="bg-black text-white min-h-screen px-6 py-12 sm:px-12 md:px-20 lg:px-32">
         <article className="prose prose-invert max-w-3xl mx-auto">
-          <h1>{frontmatter.title}</h1>
+          <h1 className="text-5xl font-bold">{frontmatter.title}</h1>
           {MDXContent}
         </article>
       </main>
