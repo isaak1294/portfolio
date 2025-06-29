@@ -42,7 +42,7 @@ export default function WritingPage() {
         <header className="mb-12 border-b border-gray-700 pb-4">
           <h1 className="text-3xl sm:text-4xl font-bold">Writings</h1>
           <p className="text-gray-400 mt-2 text-sm sm:text-base">
-            Sometimes I write things.
+            Sometimes I write things. Just for fun.
           </p>
         </header>
 
