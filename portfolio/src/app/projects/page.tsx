@@ -16,6 +16,13 @@ export default function ProjectsPage() {
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
           <ProjectCard
+            title="30in30"
+            description="Website to track the 30 apps that I am making in 30 days."
+            tags={['Next.js', 'TypeScript', 'Tailwind']}
+            link="https://30in30.vercel.app/"
+          />
+
+          <ProjectCard
             title="ComfortZone"
             description="A self-improvement app built with Next.js that gives you a daily social challenge to push you out of your comfort zone."
             tags={['Next.js', 'TypeScript', 'Tailwind']}
