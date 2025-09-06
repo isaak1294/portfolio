@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 export default function ProjectsPage() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <main className="min-h-screen bg-black text-white px-6 py-12 sm:px-12 md:px-20 lg:px-32">
         <header className="mb-12 border-b border-gray-700 pb-4">
           <h1 className="text-3xl sm:text-4xl font-bold">Projects</h1>
@@ -14,6 +14,20 @@ export default function ProjectsPage() {
         </header>
 
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <ProjectCard
+            title="Mathine"
+            description="A tool connected directly to the D2L api to help UVic students organize their course work and due dates in one centralized place."
+            tags={['Nuxt', 'Oracle/SQL', 'Express']}
+            link="https://mathine.uvic.ca"
+          />
+
+          <ProjectCard
+            title="Flash Me!"
+            description="My passion project and a work in progress. A mobile/web app to optimize the process of creating and reviewing flashcards to maximize satisfaction and retention."
+            tags={['React Native', 'TypeScript', 'Express']}
+            link=""
+          />
 
           <ProjectCard
             title="ComfortZone"

@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 export default function ExperiencePage() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <main className="min-h-screen bg-black text-white px-6 py-12 sm:px-12 md:px-20 lg:px-32">
         <header className="mb-12 border-b border-gray-700 pb-4">
           <h1 className="text-3xl sm:text-4xl font-bold">Experience</h1>
@@ -14,6 +14,12 @@ export default function ExperiencePage() {
         </header>
 
         <section className="relative max-w-3xl mx-auto">
+          <TimelineEntry
+            title="Software Engineer"
+            subtitle="Insipre"
+            date="September 2025 – Present"
+            description="Working as the head software engineer on a new educational tool pilot program for students at UVic."
+          />
           <TimelineEntry
             title="AI Quality Assurance Engineer"
             subtitle="DataAnnotation"

@@ -49,7 +49,7 @@ export default function Home() {
       .then((data: QuoteEntry[]) => {
         const today = new Date().toISOString().split('T')[0];
         const entry = data.find((q) => q.date === today);
-        const selected = entry?.quote || `""Lock in." - Me`;
+        const selected = entry?.quote || `"Lock in." - Me`;
         setFullQuote(selected);
       });
   }, [visible]);
