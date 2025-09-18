@@ -4,6 +4,20 @@ import { useMemo, useState, useCallback, useEffect } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
+// app/mathine-features/page.tsx
+export const metadata = {
+    title: "Mathine — Features",
+    description: "See what's up next, in progress, and awaiting merge for Mathine.",
+    openGraph: {
+        title: "Mathine — Features",
+        description: "Roadmap snapshot for Mathine.",
+        url: "https://your.site/mathine-features",
+        images: [{ url: "/og/mathine-features.png" }],
+    },
+    robots: { index: true, follow: true },
+};
+
+
 // ------------------------------------------------------------
 // Types
 // ------------------------------------------------------------
