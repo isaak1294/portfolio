@@ -7,7 +7,7 @@ import Link from "next/link";
 // ------------------------------------------------------------
 // Types
 // ------------------------------------------------------------
-export type Issue = {
+type Issue = {
     id: string;
     title: string;
     summary?: string;
@@ -89,7 +89,7 @@ const BoardSectionTitle: React.FC<{ children: React.ReactNode }> = ({ children }
 // ------------------------------------------------------------
 // IssueCard Component (separate, reusable)
 // ------------------------------------------------------------
-export const IssueCard: React.FC<{
+const IssueCard: React.FC<{
     issue: Issue;
     onClick?: (issue: Issue) => void;
 }> = ({ issue, onClick }) => {
