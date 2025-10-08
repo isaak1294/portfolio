@@ -23,6 +23,13 @@ export default function ProjectsPage() {
           />
 
           <ProjectCard
+            title="Winning NASA Space Apps Hackathon Project"
+            description="Project that won people's choice at the NASA Space Apps Hackathon Victoria."
+            tags={['React', 'Three.js', 'Express']}
+            link="https://asteroid.jimmer.dev"
+          />
+
+          <ProjectCard
             title="Flash Me!"
             description="My passion project and a work in progress. A mobile/web app to optimize the process of creating and reviewing flashcards to maximize satisfaction and retention."
             tags={['React Native', 'TypeScript', 'Express']}
