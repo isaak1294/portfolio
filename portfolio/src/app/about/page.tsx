@@ -34,7 +34,7 @@ export default function AboutPage() {
           </p>
 
           <p>
-            Arriving at UVic, I expected things to go smoothly. That illusion quickly faded. High school had not prepared me for taking six engineering courses per semester. While I had the discipline from swimming, I lacked the study skills to apply it effectively to academics. During my first year, I lost 15 pounds of muscle, gained 30 back as fat, and ended up having to retake four courses. That summer, while retaking Calculus I and II, I committed to a serious shift in mindset. I decided that this would be the lowest point in my academic life, and the only way forward was up.
+            Arriving at UVic, I expected things to go smoothly. That illusion quickly faded. High school had not prepared me for taking six engineering courses per semester. While I had the discipline from swimming, I lacked the study skills to apply it effectively to academics. During my first year, I ended up having to retake four courses. That summer, while retaking Calculus I and II, I committed to a serious shift in mindset. I decided that this would be the lowest point in my academic life, and the only way forward was up.
           </p>
 
           <p>
