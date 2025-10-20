@@ -23,6 +23,13 @@ export default function ProjectsPage() {
           />
 
           <ProjectCard
+            title="SVG Programming Language (winning UVEC project)"
+            description="A purpose-built programming language designed to help beginners learn to code in a fun, visual, engaging way."
+            tags={['TypeScript', 'React', 'Next.js']}
+            link="https://uvec-2025.vercel.app"
+          />
+
+          <ProjectCard
             title="Winning NASA Space Apps Hackathon Project"
             description="Project that won people's choice at the NASA Space Apps Hackathon Victoria."
             tags={['React', 'Three.js', 'Express']}
