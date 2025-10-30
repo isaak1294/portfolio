@@ -20,8 +20,8 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
     const mountRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
+        if (!mountRef.current) return;
         const mount = mountRef.current;
-        if (!mount) return;
 
         // basic scene
         const scene = new THREE.Scene();
@@ -88,7 +88,7 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
 
             fileLoader.load(
                 "/icons/discord-white-icon.svg",
-                (svgText) => {
+                (svgText: any) => {
                     // parse raw SVG markup ourselves
                     const data = svgLoader.parse(svgText as string);
 
@@ -167,7 +167,7 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
                     callback(iconGroup, boundsHelper);
                 },
                 undefined,
-                (err) => {
+                (err: any) => {
                     console.error("FileLoader SVG failed", err);
                 }
             );
@@ -180,7 +180,7 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
 
             texLoader.load(
                 "/icons/discord.png",
-                (map) => {
+                (map: any) => {
                     map.colorSpace = THREE.SRGBColorSpace;
 
                     // 1. FRONT FACE
@@ -238,7 +238,7 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
                     callback(iconGroup);
                 },
                 undefined,
-                (err) => {
+                (err: any) => {
                     console.error("Texture load failed for discord.png", err);
                 }
             );
@@ -253,7 +253,7 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
 
             fileLoader.load(
                 "/icons/discord-white-icon.svg",
-                (svgText) => {
+                (svgText: any) => {
                     const data = svgLoader.parse(svgText as string);
 
                     const iconGroup = new THREE.Group();
@@ -271,7 +271,6 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
                                 bevelSegments: 3,
                             });
 
-                            // 🔥 SUPER VISIBLE MATERIAL, NOT FINAL COLORS
                             const mat = new THREE.MeshStandardMaterial({
                                 color: 0xff00ff,          // hot magenta
                                 emissive: 0xff00ff,
@@ -334,7 +333,7 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
                     callback(iconGroup, helper);
                 },
                 undefined,
-                (err) => {
+                (err: any) => {
                     console.error("FileLoader SVG failed", err);
                 }
             );
