@@ -162,3 +162,28 @@ body {
     transform: translateY(-2px);
   }
 }
+
+@keyframes bounce-up {
+  0% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  60% {
+    transform: translateY(-4px);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+}
+
+.animate-bounce-up {
+  animation: bounce-up 1.2s infinite;
+}

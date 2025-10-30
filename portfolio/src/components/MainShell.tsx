@@ -32,32 +32,16 @@ const goStrudel = () => {
 export default function MainShell() {
     return (
         <div className="w-full min-h-screen bg-[#0f0f10] text-white font-sans flex justify-center px-4 py-8 lg:py-16">
-            <div
-                className="
-          w-full
-          max-w-[1800px]
-          grid
-          gap-8
-          grid-cols-1
-          lg:[grid-template-columns:260px_minmax(0,800px)_1fr]
-        "
-            >
+            <div className="w-full max-w-[1800px] grid gap-8 grid-cols-1 lg:[grid-template-columns:260px_minmax(0,800px)_1fr]">
+
                 {/* LEFT RAIL */}
-                <aside
-                    className="
-            order-1
-            flex flex-col gap-4
-            lg:order-1
-            lg:sticky lg:top-8
-            self-start
-          "
-                >
+                <aside className="order-1 flex flex-col gap-4 lg:order-1 lg:sticky lg:top-8 self-start">
                     <SidePanelCard title="Register Now!">
                         <div className="text-white text-sm leading-snug">
                             Spots are limited. Save your spot.
                         </div>
 
-                        <div className="mt-4 w-full max-w-[200px]">
+                        <div className="mt-4 w-full max-w-full lg:max-w-[200px] flex justify-center lg:justify-start">
                             <Mini3DButton variant="register" onClick={goRegister} />
                         </div>
                     </SidePanelCard>
@@ -70,7 +54,7 @@ export default function MainShell() {
                             Everything you need before the event.
                         </div>
 
-                        <div className="mt-4 w-full max-w-[200px]">
+                        <div className="mt-4 w-full max-w-full lg:max-w-[200px] flex justify-center lg:justify-start">
                             <Mini3DButton variant="discord" onClick={goDiscord} />
                         </div>
                     </SidePanelCard>
@@ -80,33 +64,19 @@ export default function MainShell() {
                             Live-coded beats. Generative rhythm. Chaos.
                         </div>
 
-                        <div className="mt-4 w-full max-w-[200px]">
+                        <div className="mt-4 w-full max-w-full lg:max-w-[200px] flex justify-center lg:justify-start">
                             <Mini3DButton variant="strudel" onClick={goStrudel} />
                         </div>
                     </SidePanelCard>
                 </aside>
 
                 {/* MAIN CONTENT */}
-                <main
-                    className="
-            order-2
-            flex justify-center
-            lg:order-2
-          "
-                >
+                <main className="order-2 flex justify-center lg:order-2">
                     <MainContent />
                 </main>
 
                 {/* RIGHT RAIL */}
-                <aside
-                    className="
-            order-3
-            flex flex-col gap-4
-            lg:order-3
-            lg:sticky lg:top-8
-            self-start
-          "
-                >
+                <aside className="order-3 flex flex-col gap-4 lg:order-3 lg:sticky lg:top-8 self-start">
                     <StrudelEmbedCard
                         title="Now Playing"
                         description="Strudel session // live code synth"

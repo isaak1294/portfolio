@@ -9,45 +9,32 @@ export default function SwipeHint({ onActivate }: SwipeHintProps) {
     return (
         <button
             onClick={onActivate}
+            className={`
+        absolute
+        left-1/2
+        bottom-[25vh]    /* higher on screen so it's obvious on mobile */
+        -translate-x-1/2
+        flex flex-col items-center
+        px-5 py-4
+        rounded-full
+        bg-black/70
+        border border-white/40
+        text-white
+        leading-tight
+        backdrop-blur-md
+        shadow-[0_30px_80px_rgba(0,0,0,0.9)]
+        active:scale-[0.97]
+      `}
             style={{
-                position: "absolute",
-                left: "50%",
-                bottom: "2rem",
-                transform: "translateX(-50%)",
-                color: "white",
-                background: "rgba(0,0,0,0.4)",
-                border: "1px solid rgba(255,255,255,0.4)",
-                borderRadius: "9999px",
-                padding: "0.75rem 1rem",
-                fontSize: "0.8rem",
-                lineHeight: 1,
-                letterSpacing: "0.05em",
-                fontWeight: 500,
-                backdropFilter: "blur(6px)",
-                WebkitBackdropFilter: "blur(6px)",
-                cursor: "pointer",
+                WebkitBackdropFilter: "blur(8px)",
             }}
         >
-            <div
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "0.4rem",
-                }}
-            >
-                <span style={{ textTransform: "uppercase" }}>Swipe up</span>
-                <span
-                    style={{
-                        display: "block",
-                        width: "2px",
-                        height: "16px",
-                        backgroundColor: "white",
-                        borderRadius: "1px",
-                        animation: "hintPulse 1.4s infinite",
-                    }}
-                />
-            </div>
+            <span className="text-[0.9rem] font-semibold tracking-wide uppercase text-white">
+                Tap or Swipe Up
+            </span>
+            <span className="text-[0.8rem] font-medium text-white/60 mt-1">
+                Enter the experience
+            </span>
         </button>
     );
 }
