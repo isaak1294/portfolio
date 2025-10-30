@@ -1,14 +1,9 @@
-// components/MainShell.tsx
 "use client";
 
 import MainContent from "@/components/MainContent";
 import SidePanelCard from "@/components/SidePanelCard";
 import StrudelEmbedCard from "@/components/StrudelEmbedCard";
 import Mini3DButton from "@/components/Mini3DButton";
-
-// you actually don't need useRouter here unless you're doing internal nav.
-// leaving it out for now since all 3 are external in this code.
-// import { useRouter } from "next/navigation";
 
 const goRegister = () => {
     window.open(
@@ -37,56 +32,81 @@ const goStrudel = () => {
 export default function MainShell() {
     return (
         <div className="w-full min-h-screen bg-[#0f0f10] text-white font-sans flex justify-center px-4 py-8 lg:py-16">
-            <div className="w-full max-w-[1400px] grid gap-8 grid-cols-1 lg:grid-cols-[minmax(200px,1fr)_minmax(0,800px)_minmax(200px,1fr)]">
+            <div
+                className="
+          w-full
+          max-w-[1800px]
+          grid
+          gap-8
+          grid-cols-1
+          lg:[grid-template-columns:260px_minmax(0,800px)_1fr]
+        "
+            >
                 {/* LEFT RAIL */}
-                <aside className="hidden lg:flex flex-col gap-4 order-2 lg:order-1 lg:sticky lg:top-8 self-start">
+                <aside
+                    className="
+            order-1
+            flex flex-col gap-4
+            lg:order-1
+            lg:sticky lg:top-8
+            self-start
+          "
+                >
                     <SidePanelCard title="Register Now!">
-                        <div className="text-white text-sm">
-                            Spots are limited, reserve your spot here!
+                        <div className="text-white text-sm leading-snug">
+                            Spots are limited. Save your spot.
                         </div>
-                        <div className="mt-4">
-                            <Mini3DButton
-                                variant="register"
-                                onClick={goRegister}
-                            />
+
+                        <div className="mt-4 w-full max-w-[200px]">
+                            <Mini3DButton variant="register" onClick={goRegister} />
                         </div>
                     </SidePanelCard>
 
                     <SidePanelCard title="Join The Discord!">
-                        <div className="text-white text-sm">
-                            Announcements shared in the discord.
+                        <div className="text-white text-sm leading-snug">
+                            Announcements, schedule drops, last-minute changes.
                         </div>
-                        <div className="text-white/50 text-[0.7rem]">
-                            Everything you need to know before the event.
+                        <div className="text-white/50 text-[0.7rem] leading-snug mt-1">
+                            Everything you need before the event.
                         </div>
-                        <div className="mt-4">
-                            <Mini3DButton
-                                variant="discord"
-                                onClick={goDiscord}
-                            />
+
+                        <div className="mt-4 w-full max-w-[200px]">
+                            <Mini3DButton variant="discord" onClick={goDiscord} />
                         </div>
                     </SidePanelCard>
 
                     <SidePanelCard title="Check out Strudel!">
-                        <div className="text-white text-sm">
-                            Live-coded beats. Dirty club textures. No presets.
+                        <div className="text-white text-sm leading-snug">
+                            Live-coded beats. Generative rhythm. Chaos.
                         </div>
-                        <div className="mt-4">
-                            <Mini3DButton
-                                variant="strudel"
-                                onClick={goStrudel}
-                            />
+
+                        <div className="mt-4 w-full max-w-[200px]">
+                            <Mini3DButton variant="strudel" onClick={goStrudel} />
                         </div>
                     </SidePanelCard>
                 </aside>
 
-                {/* CENTER CONTENT */}
-                <main className="order-1 lg:order-2 flex justify-center">
+                {/* MAIN CONTENT */}
+                <main
+                    className="
+            order-2
+            flex justify-center
+            lg:order-2
+          "
+                >
                     <MainContent />
                 </main>
 
                 {/* RIGHT RAIL */}
-                <aside className="flex flex-col gap-4 order-3 lg:order-3 lg:sticky lg:top-8 self-start">
+                <aside
+                    className="
+            order-3
+            flex flex-col gap-4
+            lg:order-3
+            lg:sticky lg:top-8
+            self-start
+          "
+                >
                     <StrudelEmbedCard
                         title="Now Playing"
                         description="Strudel session // live code synth"
