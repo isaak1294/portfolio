@@ -35,14 +35,7 @@ export default function MainContent() {
                 The hackathon itself will start at 12pm in Hickman 105, where everyone will meet up, get a rundown on the event. Shortly after, we will run a brief
                 optional workshop for anyone who wants to learn the basics of Strudel.
 
-                FAQ:
 
-                Can I work in a team?
-
-                Yes! Teams can be as big as you want, or you can work solo. Given the nature of the event, we don't see much benefit in having a large team, but if you'd
-                like to work with all of your friends, that's totally fine by us!
-
-                What will we be judged on?
 
 
             </p>
@@ -52,8 +45,16 @@ export default function MainContent() {
           mt-4 text-[0.95rem] leading-[1.5] text-white/70
         `}
             >
-                On desktop, this panel is centered between side rails. On mobile,
-                this is the first block in the scroll.
+                FAQ:
+
+                Can I work in a team?
+
+                Yes! Teams can be as big as you want, or you can work solo. Given the nature of the event, we don't see much benefit in having a large team, but if you'd
+                like to work with all of your friends, that's totally fine by us!
+
+                What will we be judged on?
+
+                Judging will be done by a mixed panel of industry professionals from music and computer science.
             </p>
         </div>
     );

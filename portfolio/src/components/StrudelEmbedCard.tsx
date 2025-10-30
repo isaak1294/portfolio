@@ -2,85 +2,73 @@
 "use client";
 
 type StrudelEmbedCardProps = {
-    title?: string;
+    title: string;
     description?: string;
-    url: string; // full strudel.cc URL including the hash
+    url: string; // full strudel.cc/#... link
 };
 
 export default function StrudelEmbedCard({
-    title = "Now Playing",
-    description = "Live Strudel patch",
+    title,
+    description,
     url,
 }: StrudelEmbedCardProps) {
     return (
         <div
             className={`
-        rounded-2xl
-        border border-white/10
-        bg-white/5
-        backdrop-blur-sm
-        p-6
-        text-white
-        shadow-[0_25px_90px_rgba(0,0,0,0.6)]
-        flex
-        flex-col
-        gap-4
-      `}
-
+                w-full
+                rounded-2xl
+                bg-black/40
+                border border-white/10
+                shadow-[0_30px_80px_rgba(0,0,0,0.8)]
+                p-4
+                flex
+                flex-col
+                text-white
+                overflow-hidden
+                /* bigger on desktop */
+                lg:p-6
+            `}
         >
-            <div className="flex flex-col">
-                <div
-                    className={`
-            text-[0.75rem]
-            font-semibold
-            uppercase tracking-[0.08em]
-            text-white
-          `}
-                >
+            <div className="mb-4">
+                <div className="text-sm font-semibold leading-tight text-white">
                     {title}
                 </div>
-
-                <div
-                    className={`
-            text-[0.85rem]
-            leading-snug
-            text-white/60
-          `}
-                >
-                    {description}
-                </div>
+                {description && (
+                    <div className="text-[0.7rem] text-white/50 leading-snug mt-1">
+                        {description}
+                    </div>
+                )}
             </div>
 
-            {/* Bigger embed viewport */}
+            {/* EMBED WRAPPER */}
             <div
                 className={`
-          rounded-xl
-          overflow-hidden
-          border border-white/10
-          bg-black/70
-        `}
-                style={{
-                    height: "420px",     // taller viewport
-                    minWidth: "320px",   // wider footprint inside the rail
-                }}
+                    relative
+                    w-full
+                    /* mobile height */
+                    h-[240px]
+
+                    /* desktop: taller */
+                    lg:h-[360px]
+
+                    rounded-lg
+                    bg-black/60
+                    border border-white/10
+                    overflow-hidden
+                `}
             >
+                {/* The Strudel IDE / player */}
                 <iframe
                     src={url}
-                    className="w-full h-full"
-                    allow="autoplay; microphone"
-                    allowFullScreen
+                    className={`
+                        absolute inset-0
+                        w-full h-full
+                        border-0
+                        overflow-hidden
+                    `}
+                    // sandbox keeps it from nuking your page if Strudel does window.top stuff
+                    sandbox="allow-scripts allow-same-origin"
                 />
-            </div>
-
-            <div
-                className={`
-          text-[0.75rem]
-          leading-snug
-          text-white/40
-          text-right
-        `}
-            >
-                Powered by strudel.cc
             </div>
         </div>
     );

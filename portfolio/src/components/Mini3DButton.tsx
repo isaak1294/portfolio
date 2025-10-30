@@ -246,14 +246,14 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
 
 
         function makeDiscordIcon3D(
-            callback: (iconGroup: THREE.Group, helper: THREE.Box3Helper) => void
+            callback: (iconLogo: THREE.Group, helper: THREE.Box3Helper) => void
         ) {
             const fileLoader = new FileLoader();
             const svgLoader = new SVGLoader();
 
             fileLoader.load(
                 "/icons/discord-white-icon.svg",
-                (svgText: any) => {
+                (svgText) => {
                     const data = svgLoader.parse(svgText as string);
 
                     const iconGroup = new THREE.Group();
@@ -262,21 +262,23 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
                         const shapes = path.toShapes(true);
 
                         for (const shape of shapes) {
-                            // 3D EXTRUSION
+                            // Pull bevels way back down so we don't introduce something
+                            // degenerate. Keep depth high so it's chunky.
                             const geo = new THREE.ExtrudeGeometry(shape, {
-                                depth: 0.3,            // how thick
+                                depth: 1.0,            // thick, so it's obviously 3D
                                 bevelEnabled: true,
-                                bevelThickness: 0.05,
+                                bevelThickness: 0.05,  // small again
                                 bevelSize: 0.05,
-                                bevelSegments: 3,
+                                bevelSegments: 2,
                             });
 
                             const mat = new THREE.MeshStandardMaterial({
-                                color: 0xff00ff,          // hot magenta
+                                color: 0xff00ff,          // magenta debug
                                 emissive: 0xff00ff,
                                 emissiveIntensity: 0.6,
                                 metalness: 0.2,
                                 roughness: 0.3,
+                                side: THREE.DoubleSide,
                             });
 
                             const mesh = new THREE.Mesh(geo, mat);
@@ -284,60 +286,56 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
                         }
                     }
 
-                    // --- CENTER & SCALE (same idea) ---
+                    // --- CENTER & SCALE ---
 
-                    // 1. tilt so bevels catch light
-                    iconGroup.rotation.set(Math.PI / 8, Math.PI / 8, 0);
-
-                    // 2. measure bounds
+                    // compute bounds in its current local space
                     const preBox = new THREE.Box3().setFromObject(iconGroup);
                     const size = new THREE.Vector3();
                     const center = new THREE.Vector3();
                     preBox.getSize(size);
                     preBox.getCenter(center);
 
-                    // 3. recenter pivot
+                    // recenter pivot to origin
                     iconGroup.position.x = -center.x;
                     iconGroup.position.y = -center.y;
                     iconGroup.position.z = -center.z;
 
-                    // 4. normalize scale -> about 3 world units wide
+                    // scale so it fits in card
                     const maxDim = Math.max(size.x, size.y, size.z || 1);
-                    const target = 3.0;
+                    const target = 2.0; // 2 world units across
                     const s = target / maxDim;
                     iconGroup.scale.setScalar(s);
 
-                    // 5. NOW: after scaling+centering, build helper
+                    // NOW do NOT tilt. Keep facing camera.
+                    // IMPORTANT: we won't rotate here.
+
+                    // put in front of camera a bit
+                    iconGroup.position.set(-1, -0.5, 0.5);
+
+                    // helper box so we can SEE where three thinks it is
                     const finalBox = new THREE.Box3().setFromObject(iconGroup);
                     const helper = new THREE.Box3Helper(finalBox, 0x00ff00);
 
-                    // 6. DEBUG OVERRIDES:
-                    //    put the group in an absolutely known, camera-friendly spot,
-                    //    same as your cube position that worked.
-                    //    camera is at z=4 looking at origin, so:
-                    //
-                    //    - push it a bit toward camera (z ~ 0.5)
-                    //    - keep it roughly around origin in x/y
-                    //    - DON'T rescale it to 0.002 (that was making it microscopic)
-                    //
-                    iconGroup.position.set(0, 0, 0.5);
-                    iconGroup.rotation.set(0, 0, 0); // face camera dead-on for now
-
-                    // log for sanity
-                    console.log("DEBUG discord icon", {
+                    console.log("FINAL DEBUG after extrude:", {
                         sizeBeforeScale: { x: size.x, y: size.y, z: size.z },
                         maxDim,
                         scaleUsed: s,
+                        groupPos: {
+                            x: iconGroup.position.x,
+                            y: iconGroup.position.y,
+                            z: iconGroup.position.z,
+                        },
                     });
 
                     callback(iconGroup, helper);
                 },
                 undefined,
-                (err: any) => {
+                (err) => {
                     console.error("FileLoader SVG failed", err);
                 }
             );
         }
+
 
 
 
@@ -384,10 +382,7 @@ export default function Mini3DButton({ variant, onClick }: Mini3DButtonProps) {
         const debugCube = new THREE.Mesh(debugGeo, debugMat);
         // create geometry depending on variant
         if (variant === "discord") {
-            makeDiscordIcon3D((iconLogo) => {
-                // You do NOT need to rescale or re-rotate here.
-                // The function already centered, scaled, tilted, and bumped z forward.
-
+            makeDiscordIcon3D((iconLogo, helper) => {
                 group.add(iconLogo);
             });
         }
