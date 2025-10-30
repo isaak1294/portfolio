@@ -40,6 +40,9 @@ export default function MainShell() {
                         <div className="text-white text-sm leading-snug">
                             Spots are limited. Save your spot.
                         </div>
+                        <div className="text-white/50 text-[0.7rem] leading-snug mt-1">
+                            click the spinning thing.
+                        </div>
 
                         <div className="mt-4 w-full max-w-full lg:max-w-[200px] flex justify-center lg:justify-start">
                             <Mini3DButton variant="register" onClick={goRegister} />

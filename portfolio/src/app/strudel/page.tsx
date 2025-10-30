@@ -1,22 +1,15 @@
-// app/page.tsx
 "use client";
 
 import { useRef, useEffect } from "react";
-
 import HeroCanvas from "@/components/HeroCanvas";
-import CodewaveTextOverlay from "@/components/CodeWaveTextOverlay";
 import SwipeHint from "@/components/SwipeHint";
-
-import MainShell from "@/components/MainShell";
+import MainShell from "@/components/MainShell"; // assuming section 2 is this
+import CodewaveTextOverlay from "@/components/CodeWaveTextOverlay";
 
 export default function HomePage() {
-    // scrollable wrapper for the two main sections
     const scrollRef = useRef<HTMLDivElement | null>(null);
+    const section2Ref = useRef<HTMLDivElement | null>(null);
 
-    // ref to the second (main app) section so we can scroll to it
-    const section2Ref = useRef<HTMLElement | null>(null);
-
-    // helper: programmatic smooth scroll into section 2
     const goToSection2 = () => {
         if (!scrollRef.current || !section2Ref.current) return;
         const top = section2Ref.current.offsetTop;
@@ -26,7 +19,7 @@ export default function HomePage() {
         });
     };
 
-    // touch swipe-up detection on the hero section (mobile)
+    // touch swipe-up detection, ONLY when we're basically at the top
     useEffect(() => {
         const el = scrollRef.current;
         if (!el) return;
@@ -35,19 +28,24 @@ export default function HomePage() {
         let endY = 0;
 
         function onTouchStart(e: TouchEvent) {
-            if (el!.scrollTop !== 0) return; // only detect swipe if we're at the first section
+            // only activate swipe detection if we're near the very top already
+            if (el.scrollTop > 20) return;
             startY = e.touches[0].clientY;
             endY = startY;
         }
 
         function onTouchMove(e: TouchEvent) {
+            // if we didn't start in section 1, ignore
+            if (el.scrollTop > 20) return;
             endY = e.touches[0].clientY;
         }
 
         function onTouchEnd() {
+            // if we didn't start in section 1, ignore
+            if (el.scrollTop > 20) return;
             const delta = startY - endY;
-            // if user swiped up a decent amount and we're still near the top, snap to section 2
-            if (delta > 60 && el!.scrollTop < window.innerHeight * 0.5) {
+            // user swiped up by at least ~60px while at the top
+            if (delta > 60) {
                 goToSection2();
             }
         }
@@ -63,16 +61,15 @@ export default function HomePage() {
         };
     }, []);
 
-    // wheel scroll-down detection on desktop
+    // wheel "scroll down to snap" (desktop only)
     useEffect(() => {
         const el = scrollRef.current;
         if (!el) return;
 
         function onWheel(e: WheelEvent) {
-            const atTopSection = el!.scrollTop < window.innerHeight * 0.3;
+            const atTopSection = el.scrollTop < window.innerHeight * 0.3;
             const scrollingDown = e.deltaY > 20;
 
-            // hijack that first wheel to smoothly scroll instead of letting the browser stutter-scroll
             if (atTopSection && scrollingDown) {
                 e.preventDefault();
                 goToSection2();
@@ -95,13 +92,11 @@ export default function HomePage() {
                 overflowY: "auto",
                 scrollSnapType: "y mandatory",
                 scrollBehavior: "smooth",
-                backgroundColor: "#000", // fallback bg behind canvases
-                color: "white",
-                fontFamily:
-                    "-apple-system, BlinkMacSystemFont, 'Inter', 'Roboto', 'Helvetica Neue', sans-serif",
+                WebkitOverflowScrolling: "touch",
+                backgroundColor: "#000", // safety background
             }}
         >
-            {/* SECTION 1: Hero / landing */}
+            {/* SECTION 1 */}
             <section
                 style={{
                     position: "relative",
@@ -109,29 +104,36 @@ export default function HomePage() {
                     height: "100vh",
                     scrollSnapAlign: "start",
                     overflow: "hidden",
+                    color: "white",
+                    fontFamily:
+                        "-apple-system, BlinkMacSystemFont, 'Inter', 'Roboto', 'Helvetica Neue', sans-serif",
                 }}
             >
-                {/* Heartbeat monitor canvas in the back */}
-                <HeroCanvas />
-
-                {/* Brand wordmark overlay with breathing/hover text */}
                 <CodewaveTextOverlay />
 
-                {/* Swipe up hint at the bottom */}
+                {/* Hero canvas behind */}
+                <HeroCanvas />
+
+                {/* CTA hint */}
                 <SwipeHint onActivate={goToSection2} />
             </section>
 
-            {/* SECTION 2: Main app surface */}
+            {/* SECTION 2 */}
             <section
                 ref={section2Ref}
                 style={{
                     width: "100%",
                     minHeight: "100vh",
                     scrollSnapAlign: "start",
-                    // We let MainShell fully control background, layout, etc.
-                    // but we keep this wrapper block-level so snap works.
+                    backgroundColor: "#0f0f10",
+                    color: "white",
+                    fontFamily:
+                        "-apple-system, BlinkMacSystemFont, 'Inter', 'Roboto', 'Helvetica Neue', sans-serif",
+                    display: "flex",
+                    flexDirection: "column",
                 }}
             >
+                {/* your actual app shell */}
                 <MainShell />
             </section>
         </div>
