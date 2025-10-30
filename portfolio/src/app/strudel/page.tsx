@@ -35,7 +35,7 @@ export default function HomePage() {
         let endY = 0;
 
         function onTouchStart(e: TouchEvent) {
-            if (el.scrollTop !== 0) return; // only detect swipe if we're at the first section
+            if (el!.scrollTop !== 0) return; // only detect swipe if we're at the first section
             startY = e.touches[0].clientY;
             endY = startY;
         }
@@ -47,7 +47,7 @@ export default function HomePage() {
         function onTouchEnd() {
             const delta = startY - endY;
             // if user swiped up a decent amount and we're still near the top, snap to section 2
-            if (delta > 60 && el.scrollTop < window.innerHeight * 0.5) {
+            if (delta > 60 && el!.scrollTop < window.innerHeight * 0.5) {
                 goToSection2();
             }
         }
@@ -69,7 +69,7 @@ export default function HomePage() {
         if (!el) return;
 
         function onWheel(e: WheelEvent) {
-            const atTopSection = el.scrollTop < window.innerHeight * 0.3;
+            const atTopSection = el!.scrollTop < window.innerHeight * 0.3;
             const scrollingDown = e.deltaY > 20;
 
             // hijack that first wheel to smoothly scroll instead of letting the browser stutter-scroll

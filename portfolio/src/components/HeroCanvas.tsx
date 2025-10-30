@@ -79,12 +79,12 @@ export default function HeroCanvas() {
             canvasWidth = window.innerWidth;
             canvasHeight = window.innerHeight;
 
-            canvas.width = canvasWidth;
-            canvas.height = canvasHeight;
+            canvas!.width = canvasWidth;
+            canvas!.height = canvasHeight;
 
             // Hard clear so we don't smear old pixels after resize
-            ctx.fillStyle = "black";
-            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            ctx!.fillStyle = "black";
+            ctx!.fillRect(0, 0, canvasWidth, canvasHeight);
 
             // Reset sweep positions
             headX = 0;
@@ -105,8 +105,8 @@ export default function HeroCanvas() {
             // wrap sweep when we hit the right edge
             if (headX > canvasWidth) {
                 // full clear between sweeps
-                ctx.fillStyle = "black";
-                ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+                ctx!.fillStyle = "black";
+                ctx!.fillRect(0, 0, canvasWidth, canvasHeight);
 
                 headX = 0;
                 prevX = 0;
@@ -114,21 +114,21 @@ export default function HeroCanvas() {
             }
 
             // fade old trail: translucent black over the whole canvas
-            ctx.fillStyle = `rgba(0,0,0,${TRAIL_FADE})`;
-            ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+            ctx!.fillStyle = `rgba(0,0,0,${TRAIL_FADE})`;
+            ctx!.fillRect(0, 0, canvasWidth, canvasHeight);
 
             // compute new Y from ECG at this time
             const y = currentY(nowSec);
 
             // draw latest segment
-            ctx.beginPath();
-            ctx.moveTo(prevX, prevY);
-            ctx.lineTo(headX, y);
-            ctx.strokeStyle = "white";
-            ctx.lineWidth = LINE_WIDTH;
-            ctx.lineCap = "round";
-            ctx.lineJoin = "round";
-            ctx.stroke();
+            ctx!.beginPath();
+            ctx!.moveTo(prevX, prevY);
+            ctx!.lineTo(headX, y);
+            ctx!.strokeStyle = "white";
+            ctx!.lineWidth = LINE_WIDTH;
+            ctx!.lineCap = "round";
+            ctx!.lineJoin = "round";
+            ctx!.stroke();
 
             prevX = headX;
             prevY = y;
