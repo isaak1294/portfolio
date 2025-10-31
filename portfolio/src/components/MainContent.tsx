@@ -45,6 +45,7 @@ export default function MainContent() {
 
             {/* --- Schedule --- */}
             <h2 className="text-xl font-semibold text-white mt-8 mb-2">Schedule</h2>
+            <h3 className="text-l font-semibold text-white mt-8 mb-2">November 16, Hickman 105</h3>
             <ul className="list-disc list-inside text-white/70 text-[0.95rem] leading-relaxed mb-4">
                 <li>
                     <strong>12:00 PM – 12:30 PM:</strong> Kickoff and overview
@@ -53,10 +54,10 @@ export default function MainContent() {
                     <strong>12:30 PM – 1:00 PM:</strong> Optional Strudel workshop
                 </li>
                 <li>
-                    <strong>1:00 PM – 5:00 PM:</strong> Build, jam, and collaborate
+                    <strong>1:00 PM – 6:00 PM:</strong> Build, jam, and collaborate
                 </li>
                 <li>
-                    <strong>5:00 PM – 6:00 PM:</strong> Demos and judging
+                    <strong>6:00 PM – 8:00 PM:</strong> Demos and judging
                 </li>
             </ul>
 
