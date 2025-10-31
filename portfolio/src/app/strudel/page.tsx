@@ -28,6 +28,7 @@ export default function HomePage() {
         let endY = 0;
 
         function onTouchStart(e: TouchEvent) {
+            if (!el) return;
             // only activate swipe detection if we're near the very top already
             if (el.scrollTop > 20) return;
             startY = e.touches[0].clientY;
@@ -35,12 +36,14 @@ export default function HomePage() {
         }
 
         function onTouchMove(e: TouchEvent) {
+            if (!el) return;
             // if we didn't start in section 1, ignore
             if (el.scrollTop > 20) return;
             endY = e.touches[0].clientY;
         }
 
         function onTouchEnd() {
+            if (!el) return;
             // if we didn't start in section 1, ignore
             if (el.scrollTop > 20) return;
             const delta = startY - endY;
@@ -67,6 +70,7 @@ export default function HomePage() {
         if (!el) return;
 
         function onWheel(e: WheelEvent) {
+            if (!el) return;
             const atTopSection = el.scrollTop < window.innerHeight * 0.3;
             const scrollingDown = e.deltaY > 20;
 
