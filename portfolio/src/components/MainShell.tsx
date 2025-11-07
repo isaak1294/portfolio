@@ -32,7 +32,8 @@ const goStrudel = () => {
 export default function MainShell() {
     return (
         <div className="w-full min-h-screen bg-[#0f0f10] text-white font-sans flex justify-center px-4 py-8 lg:py-16">
-            <div className="w-full max-w-[1800px] grid gap-8 grid-cols-1 lg:[grid-template-columns:260px_minmax(0,800px)_1fr]">
+            <div className="w-full max-w-[1800px] grid gap-8 grid-cols-1 lg:[grid-template-columns:260px_minmax(0,800px)_minmax(0,800px)] items-stretch">
+
 
                 {/* LEFT RAIL */}
                 <aside className="order-1 flex flex-col gap-4 lg:order-1 lg:sticky lg:top-8 self-start">
